@@ -1,3 +1,5 @@
+require "date"
+
 module MRZ
   class Result
     attr_reader :birth_date_check_digit, :composite_check_digit,
