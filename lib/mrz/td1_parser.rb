@@ -5,16 +5,17 @@ module MRZ
     FORMAT_THREE = /\A([^<]+)<<(.+)\z/
 
     def initialize(code_ary)
-      if code_ary.size != 3
-        raise MRZ::InvalidFormatError, "td1 requires three rows"
-      end
-
+      @code  = code_ary
       @one   = code_ary[0]
       @two   = code_ary[1]
       @three = code_ary[2]
     end
 
     def parse
+      if @code.size != 3
+        raise MRZ::InvalidFormatError, "td1 requires 3 mrz lines"
+      end
+
       line_one_matches = FORMAT_ONE.match(@one)
       line_two_matches = FORMAT_TWO.match(@two)
       line_three_matches = FORMAT_THREE.match(@three)

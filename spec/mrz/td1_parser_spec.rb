@@ -11,17 +11,17 @@ RSpec.describe MRZ::TD1Parser do
     it "should take an array of strings" do
       MRZ::TD1Parser.new(["one", "two", "three"])
     end
-
-    it "should raise an error if array contains more than three strings" do
-      expect { MRZ::TD1Parser.new(["one", "two", "three", "four"]) }.to raise_error(MRZ::InvalidFormatError)
-    end
-
-    it "should raise an error if array contains less than three strings" do
-      expect { MRZ::TD1Parser.new(["one", "two"]) }.to raise_error(MRZ::InvalidFormatError)
-    end
   end
 
   context "#parse" do
+    it "should raise an error if array contains more than three strings" do
+      expect { MRZ::TD1Parser.new(mrz_array.concat(["hello!!"])).parse }.to raise_error(MRZ::InvalidFormatError)
+    end
+
+    it "should raise an error if array contains less than three strings" do
+      expect { MRZ::TD1Parser.new(mrz_array[0..1]).parse }.to raise_error(MRZ::InvalidFormatError)
+    end
+
     it "should return a correct MRZ::Result instance" do
       res = MRZ::TD1Parser.new(mrz_array).parse
 
