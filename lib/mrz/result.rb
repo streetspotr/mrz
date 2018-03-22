@@ -23,6 +23,7 @@ module MRZ
       @optional1                   = opts.fetch(:optional1)
       @optional2                   = opts.fetch(:optional2)
       @sex                         = opts.fetch(:sex)
+      @type                        = opts.fetch(:type)
     end
 
     def birth_date
@@ -43,6 +44,15 @@ module MRZ
       @_sex ||= @sex == "" ? "nonspecified" : @sex
     end
 
+    def valid?
+      @_valid ||= begin
+        MRZ::CheckDigit.calculate(@birth_date).to_s == @birth_date_check_digit &&
+        MRZ::CheckDigit.calculate(@document_number).to_s == @document_number_check_digit &&
+        MRZ::CheckDigit.calculate(@expiration_date).to_s == @expiration_date_check_digit &&
+        composite_digit_valid?
+      end
+    end
+
     private
 
       def add_correct_century(year)
@@ -50,6 +60,26 @@ module MRZ
           2000 + year
         else
           1900 + year
+        end
+      end
+
+      def composite_digit_valid?
+        if @type == :td1
+          MRZ::CheckDigit.calculate(
+            @document_number + @document_number_check_digit +
+            @optional1 + @birth_date + @birth_date_check_digit +
+            @expiration_date + @expiration_date_check_digit +
+            @optional2
+          ).to_s == @composite_check_digit
+        elsif [:td2, :td3].include?(@type)
+          MRZ::CheckDigit.calculate(
+            @document_number + @document_number_check_digit +
+            @birth_date + @birth_date_check_digit +
+            @expiration_date + @expiration_date_check_digit +
+            @optional1 + @optional2
+          ).to_s == @composite_check_digit
+        else
+          raise InvalidFormatError, "Unknown format type"
         end
       end
   end

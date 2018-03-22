@@ -47,7 +47,8 @@ module MRZ
         nationality: special_char_to_empty_space(line_two_matches[6]),
         optional1: special_char_to_empty_space(line_one_matches[5]),
         optional2: special_char_to_empty_space(line_two_matches[7]),
-        sex: special_char_to_empty_space(line_two_matches[3])
+        sex: special_char_to_empty_space(line_two_matches[3]),
+        type: :td1,
       )
     end
   end

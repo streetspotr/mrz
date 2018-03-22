@@ -17,7 +17,8 @@ RSpec.describe MRZ::Result do
       nationality: "D",
       optional1: "",
       optional2: "",
-      sex: ""
+      sex: "",
+      type: :td1
     )
   end
 
@@ -125,6 +126,64 @@ RSpec.describe MRZ::Result do
     it "should return correct value if not empty" do
       result.instance_variable_set(:@sex, "m")
       expect(result.sex).to eq("m")
+    end
+  end
+
+  context "#valid?" do
+    it "should return false if birth date check digit does not match" do
+      result.instance_variable_set(:@birth_date_check_digit, "1")
+      expect(result.valid?).to eq(false)
+    end
+
+    it "should return false if document number check digit does not match" do
+      result.instance_variable_set(:@document_number_check_digit, "1")
+      expect(result.valid?).to eq(false)
+    end
+
+    it "should return false if expiration date check digit does not match" do
+      result.instance_variable_set(:@expiration_date_check_digit, "1")
+      expect(result.valid?).to eq(false)
+    end
+
+    context "with type = :td1" do
+      it "should return true if all check digits match" do
+        expect(result.valid?).to eq(true)
+      end
+
+      it "should return false if composite check digit does not match" do
+        result.instance_variable_set(:@composite_check_digit, "1")
+        expect(result.valid?).to eq(false)
+      end
+    end
+
+    context "with type = :td2" do
+      before(:each) do
+        result.instance_variable_set(:@type, :td2)
+      end
+
+      it "should return true if all check digits match" do
+        expect(result.valid?).to eq(true)
+      end
+
+      it "should return false if composite check digit does not match" do
+        result.instance_variable_set(:@composite_check_digit, "1")
+        expect(result.valid?).to eq(false)
+      end
+    end
+
+    context "with type = :td3" do
+      before(:each) do
+        result.instance_variable_set(:@type, :td3)
+      end
+
+      it "should return true if all check digits match" do
+        expect(result.valid?).to eq(true)
+      end
+
+      it "should return false if composite check digit does not match" do
+        result.instance_variable_set(:@composite_check_digit, "1")
+        expect(result.valid?).to eq(false)
+      end
     end
   end
 end
