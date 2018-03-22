@@ -1,5 +1,5 @@
 RSpec.describe MRZ::CheckDigit do
-  context "#calculate" do
+  describe "#calculate" do
     it "should return the correct value #1" do
       value = MRZ::CheckDigit.calculate("123456789")
       expect(value).to eq(7)

@@ -6,13 +6,13 @@ RSpec.describe MRZ::TD2Parser do
     ]
   end
 
-  context "#initialize" do
+  describe "#initialize" do
     it "should take an array of strings" do
       MRZ::TD2Parser.new(["one", "two"])
     end
   end
 
-  context "#parse" do
+  describe "#parse" do
     it "should raise an error if array contains more than two strings" do
       expect { MRZ::TD2Parser.new(mrz_array.concat(["hello!!"])).parse }.to raise_error(MRZ::InvalidFormatError)
     end
