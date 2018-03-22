@@ -40,6 +40,7 @@ RSpec.describe MRZ::TD1Parser do
       expect(res.optional1).to                   eq("")
       expect(res.optional2).to                   eq("")
       expect(res.sex).to                         eq("nonspecified")
+      expect(res.valid?).to                      eq(true)
     end
 
     it "should raise an error if line one does not match the required format" do
