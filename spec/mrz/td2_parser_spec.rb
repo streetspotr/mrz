@@ -24,22 +24,22 @@ RSpec.describe MRZ::TD2Parser do
     it "should return a correct MRZ::Result instance" do
       res = MRZ::TD2Parser.new(mrz_array).parse
 
-      expect(res.birth_date).to eq(Date.new(1974, 8, 12))
-      expect(res.birth_date_check_digit).to eq("2")
-      expect(res.composite_check_digit).to eq("6")
-      expect(res.document_code).to eq("I")
-      expect(res.document_number).to eq("D23145890")
+      expect(res.birth_date).to                  eq(Date.new(1974, 8, 12))
+      expect(res.birth_date_check_digit).to      eq("2")
+      expect(res.composite_check_digit).to       eq("6")
+      expect(res.document_code).to               eq("I")
+      expect(res.document_number).to             eq("D23145890")
       expect(res.document_number_check_digit).to eq("7")
-      expect(res.expiration_date).to eq(Date.new(2012, 4, 15))
+      expect(res.expiration_date).to             eq(Date.new(2012, 4, 15))
       expect(res.expiration_date_check_digit).to eq("9")
-      expect(res.first_name).to eq("ANNA MARIA")
-      expect(res.issuing_state).to eq("UTO")
-      expect(res.last_name).to eq("ERIKSSON")
-      expect(res.nationality).to eq("UTO")
-      expect(res.optional1).to eq("")
-      expect(res.optional2).to eq("")
-      expect(res.sex).to eq("F")
-      expect(res.valid?).to eq(true)
+      expect(res.first_name).to                  eq("ANNA MARIA")
+      expect(res.issuing_state).to               eq("UTO")
+      expect(res.last_name).to                   eq("ERIKSSON")
+      expect(res.nationality).to                 eq("UTO")
+      expect(res.optional1).to                   eq("")
+      expect(res.optional2).to                   eq("")
+      expect(res.sex).to                         eq("F")
+      expect(res.valid?).to                      eq(true)
     end
 
     it "should raise an error if line one does not match the required format" do
