@@ -32,6 +32,9 @@ id_card = [
 result = MRZ.parse(id_card)
 
 result.valid?                      # => true
+result.valid_birth_date?	   # => true
+result.valid_expiration_date?      # => true
+result.valid_document_number?      # => true
 result.birth_date                  # => Date.new(1964, 8, 12)
 result.birth_date_check_digit      # => "5"
 result.composite_check_digit       # => "4"
