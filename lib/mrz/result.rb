@@ -46,11 +46,20 @@ module MRZ
 
     def valid?
       @_valid ||= begin
-        MRZ::CheckDigit.calculate(@birth_date).to_s == @birth_date_check_digit &&
-        MRZ::CheckDigit.calculate(@document_number).to_s == @document_number_check_digit &&
-        MRZ::CheckDigit.calculate(@expiration_date).to_s == @expiration_date_check_digit &&
-        composite_digit_valid?
+        valid_birth_date? && valid_expiration_date? && valid_document_number? && valid_composite_digit?
       end
+    end
+
+    def valid_birth_date?
+      @_valid_birth_date ||= MRZ::CheckDigit.calculate(@birth_date).to_s == @birth_date_check_digit
+    end
+
+    def valid_expiration_date?
+      @_valid_expiration_date ||= MRZ::CheckDigit.calculate(@expiration_date).to_s == @expiration_date_check_digit
+    end
+
+    def valid_document_number?
+      @_valid_document_number ||= MRZ::CheckDigit.calculate(@document_number).to_s == @document_number_check_digit
     end
 
     private
@@ -63,7 +72,7 @@ module MRZ
         end
       end
 
-      def composite_digit_valid?
+      def valid_composite_digit?
         if @type == :td1
           MRZ::CheckDigit.calculate(
             @document_number + @document_number_check_digit +

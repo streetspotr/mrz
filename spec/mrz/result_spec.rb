@@ -186,4 +186,37 @@ RSpec.describe MRZ::Result do
       end
     end
   end
+
+  describe "#valid_birth_date?" do
+    it "should return true if birth_date checksum matches" do
+      expect(result.valid_birth_date?).to eq(true)
+    end
+
+    it "should return false if birth_date checksum does not match" do
+      result.instance_variable_set(:@birth_date_check_digit, "1")
+      expect(result.valid_birth_date?).to eq(false)
+    end
+  end
+
+  describe "#valid_expiration_date?" do
+    it "should return true if expiration_date checksum matches" do
+      expect(result.valid_expiration_date?).to eq(true)
+    end
+
+    it "should return false if expiration_date checksum does not match" do
+      result.instance_variable_set(:@expiration_date_check_digit, "1")
+      expect(result.valid_expiration_date?).to eq(false)
+    end
+  end
+
+  describe "#valid_document_number?" do
+    it "should return true if document_number checksum matches" do
+      expect(result.valid_document_number?).to eq(true)
+    end
+
+    it "should return false if document_number checksum does not match" do
+      result.instance_variable_set(:@document_number_check_digit, "1")
+      expect(result.valid_document_number?).to eq(false)
+    end
+  end
 end
