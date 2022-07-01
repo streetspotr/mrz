@@ -1,6 +1,6 @@
 module MRZ
   class TD3Parser < BaseParser
-    FORMAT_ONE = /\A(.{2})(.{3})([^<]+)<<(.*)\z/
+    FORMAT_ONE = /\A(.{2})(.{3})([^<]+)<(.*)\z/
     FORMAT_TWO = /\A(.{9})(\d)(.{3})(\d{6})(\d)(.)(\d{6})(.)(.{14})(.)(\d)/
 
     def initialize(code_ary)
